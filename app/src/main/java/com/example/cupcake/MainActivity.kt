@@ -17,6 +17,7 @@ package com.example.cupcake
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 
@@ -25,16 +26,24 @@ import androidx.navigation.ui.setupActionBarWithNavController
  */
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
+    // Define navController como variável de classe para poder ser usada em outro método
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // acessa instancia do NavController no NavHostFragment
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         // mostra um título na barra de apps com base no rótulo do destino e exibe
-        // o botão Para cima sempre que não estiver em um destino de nível superior
+        // o botão Voltar sempre que não estiver em um destino de nível superior
         setupActionBarWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        // navController processa a navegação OU AppCompatActivity processa o botão Voltar
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
