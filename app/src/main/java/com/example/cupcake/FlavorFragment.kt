@@ -84,4 +84,11 @@ class FlavorFragment : Fragment() {
         super.onDestroyView()
         binding = null
     }
+
+    // Ação do Botão cancelar pedido: limpa o modelo de visualização chamando o método resetOrder()
+    fun cancelOrder() {
+        sharedViewModel.resetOrder()
+        // retorna ao StartFragment usando a ação de navegação com i iD
+        findNavController().navigate(R.id.action_flavorFragment_to_startFragment)
+    }
 }
