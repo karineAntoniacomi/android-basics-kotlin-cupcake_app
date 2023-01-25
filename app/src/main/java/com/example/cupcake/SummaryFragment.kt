@@ -21,7 +21,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.cupcake.databinding.FragmentSummaryBinding
+import com.example.cupcake.model.OrderViewModel
 
 /**
  * [SummaryFragment] contains a summary of the order details with a button to share the order
@@ -33,6 +35,9 @@ class SummaryFragment : Fragment() {
     // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentSummaryBinding? = null
+
+    // acessa uma referencia ao modelo de visualizacao compartilhada como variavel de classe
+    private val sharedViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +52,16 @@ class SummaryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.apply {
-            sendButton.setOnClickListener { sendOrder() }
+            // Atualiza os elementos da IU automaticamente pela associação com binding.
+            // App poderá observar objetos LiveData
+            // Define o proprietário do ciclo de vida no objeto de vinculação.
+            lifecycleOwner = viewLifecycleOwner
+
+            viewModel = sharedViewModel
+
+            // Código que define manualmente o listener, removido p/ usar vinculação de dados.
+            //sendButton.setOnClickListener { sendOrder() }
+            summaryFragment = this@SummaryFragment
         }
     }
 

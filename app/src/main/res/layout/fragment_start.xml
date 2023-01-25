@@ -20,6 +20,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".StartFragment">
 
+    <!-- Vinculação do listener para vincular os listeners de clique
+    do botão nas classes de fragmentos ao layout. -->
+    <data>
+        <variable
+            name="startFragment"
+            type="com.example.cupcake.StartFragment" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -48,8 +56,11 @@
                 android:textAppearance="?attr/textAppearanceHeadline4"
                 android:textColor="@color/material_on_background_emphasis_medium" />
 
+            <!-- "android:onClick="@{() ->" = listeners de eventos no atributo onClick dos botões usa
+            vinculação de listener, chama orderCupcake() no startFragment, transmite número de cupcakes -->
             <Button
                 android:id="@+id/order_one_cupcake"
+                android:onClick="@{() -> startFragment.orderCupcake(1)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -59,6 +70,7 @@
 
             <Button
                 android:id="@+id/order_six_cupcakes"
+                android:onClick="@{() -> startFragment.orderCupcake(6)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -68,6 +80,7 @@
 
             <Button
                 android:id="@+id/order_twelve_cupcakes"
+                android:onClick="@{() -> startFragment.orderCupcake(12)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

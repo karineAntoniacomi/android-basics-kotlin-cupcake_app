@@ -20,8 +20,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cupcake.databinding.FragmentFlavorBinding
+import com.example.cupcake.model.OrderViewModel
 
 /**
  * [FlavorFragment] allows a user to choose a cupcake flavor for the order.
@@ -32,6 +34,9 @@ class FlavorFragment : Fragment() {
     // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentFlavorBinding? = null
+
+    // acessa uma referencia ao modelo de visualizacao compartilhada como variavel de classe
+    private val sharedViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +50,20 @@ class FlavorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // apply é uma função de escopo que forma um escopo temporário no contexto
+        // de um objeto onde se pode acessar o objeto sem o nome
         binding?.apply {
-            nextButton.setOnClickListener { goToNextScreen() }
+            // Atualiza os elementos da IU automaticamente pela associação com binding.
+            // App poderá observar objetos LiveData
+            // Define o proprietário do ciclo de vida no objeto de vinculação.
+            lifecycleOwner = viewLifecycleOwner
+
+            // vincula a instância do modelo de visualização à instância do modelo de visualização
+            // compartilhada do fragmento à variável de dados do modelo de visualização no layout
+            viewModel = sharedViewModel
+            // Código que define manualmente o listener, removido p/ usar vinculação de dados.
+            //nextButton.setOnClickListener { goToNextScreen() }
+            flavorFragment = this@FlavorFragment
         }
     }
 

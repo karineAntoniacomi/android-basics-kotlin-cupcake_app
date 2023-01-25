@@ -19,10 +19,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cupcake.databinding.FragmentStartBinding
+import com.example.cupcake.model.OrderViewModel
 
 /**
  * This is the first screen of the Cupcake app. The user can choose how many cupcakes to order.
@@ -33,6 +34,9 @@ class StartFragment : Fragment() {
     // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentStartBinding? = null
+
+    // acessa uma referencia ao modelo de visualizacao compartilhada como variavel de classe
+    private val sharedViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,18 +50,27 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.apply {
-            // Set up the button click listeners
-            orderOneCupcake.setOnClickListener { orderCupcake(1) }
-            orderSixCupcakes.setOnClickListener { orderCupcake(6) }
-            orderTwelveCupcakes.setOnClickListener { orderCupcake(12) }
-        }
+//        binding?.apply {
+//            // Set up the button click listeners
+//            orderOneCupcake.setOnClickListener { orderCupcake(1) }
+//            orderSixCupcakes.setOnClickListener { orderCupcake(6) }
+//            orderTwelveCupcakes.setOnClickListener { orderCupcake(12) }
+//        }
+        // Vincula a nova variável de dados à instância do fragmento. Acessa a
+        // instância do fragmento no fragmento usando a palavra-chave this
+        binding?.startFragment = this
     }
 
     /**
      * Start an order with the desired quantity of cupcakes and navigate to the next screen.
      */
     fun orderCupcake(quantity: Int) {
+        // modelo de visualizacao: atualiza a quantidade antes de navegar p/ o fragment flavor
+        sharedViewModel.setQuantity(quantity)
+        // define sabor padrão como Vanilla se nenhum sabor foi definido
+        if (sharedViewModel.hasNoFlavorSet()) {
+            sharedViewModel.setFlavor(getString(R.string.vanilla))
+        }
        // Toast.makeText(activity, "Ordered $quantity cupcake(s)", Toast.LENGTH_SHORT).show()
         // navega até o fragmento de sabor
         findNavController().navigate(R.id.action_startFragment_to_flavorFragment)
