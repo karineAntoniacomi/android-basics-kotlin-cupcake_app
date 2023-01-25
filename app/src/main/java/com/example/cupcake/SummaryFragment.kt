@@ -22,6 +22,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.cupcake.databinding.FragmentSummaryBinding
 import com.example.cupcake.model.OrderViewModel
 
@@ -79,5 +80,11 @@ class SummaryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+    // Ação do Botão cancelar pedido: limpa o modelo de visualização chamando o método resetOrder()
+    fun cancelOrder() {
+        sharedViewModel.resetOrder()
+        // retorna ao StartFragment usando a ação de navegação com i iD
+        findNavController().navigate(R.id.action_summaryFragment_to_startFragment)
     }
 }
