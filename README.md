@@ -1,27 +1,27 @@
-Cupcake app
+App Cupcake 
 =================================
 
-This app contains an order flow for cupcakes with options for quantity, flavor, and pickup date.
-The order details get displayed on an order summary screen and can be shared to another app to
-send the order.
 
-This app demonstrates multiple fragments in an activity, a shared ViewModel across fragments,
-data binding, LiveData, and the Jetpack Navigation component.
+Este aplicativo contém um fluxo de pedidos de cupcakes com opções de quantidade, sabor e data de retirada.
+Os detalhes do pedido são exibidos em uma tela de resumo do pedido e podem ser compartilhados com outro aplicativo para
+envie o pedido.
 
+O App demonstra vários fragmentos em uma atividade, um ViewModel compartilhado entre os fragmentos,
+vinculação de dados, LiveData, usando o componente Jetpack Navigation.
 
-Pre-requisites
+Pre-requisitos
 --------------
-* Familiar with activities and fragments
-* How to use styles and themes in the UI
-* Basic understanding of Jetpack architecture components including ViewModel and LiveData
-* Data binding and binding expressions
-* Kotlin syntax basics
+* Familiaridade com atividades e fragmentos
+* Saber usar estilos e temas na interface do usuário
+* Compreensão básica dos componentes da arquitetura Jetpack, incluindo ViewModel e LiveData
+* Vinculação de dados e expressões de vinculação
+* Noções básicas de sintaxe Kotlin
 
 
-Getting Started
+Para começar
 ---------------
-1. Install Android Studio, if you don't already have it.
-2. Download the sample.
-3. Import the sample into Android Studio.
-4. Build and run the sample.
-# android-basics-kotlin-cupcake_app
+1. Ter o Android Studio instalado.
+2. Clonar ou baixar o repositório.
+3. Importar o repositório para o Android Studio.
+4. Executar.
+
