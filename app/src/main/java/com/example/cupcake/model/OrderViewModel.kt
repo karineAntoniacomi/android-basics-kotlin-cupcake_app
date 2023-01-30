@@ -24,6 +24,10 @@ class OrderViewModel : ViewModel() {
     private val _flavor = MutableLiveData<String>()
     val flavor: LiveData<String> = _flavor
 
+    // Possible date options
+    val dateOptions: List<String> = getPickupOptions()
+
+    // Pickup date
     private val _date = MutableLiveData<String>()
     val date: LiveData<String> = _date
 
@@ -35,7 +39,10 @@ class OrderViewModel : ViewModel() {
         NumberFormat.getCurrencyInstance().format(it)
     }
 
-    val dateOptions = getPickupOptions()
+    // bloco init inicializa as propriedades quando uma instância do OrderViewModel é criada
+    init {
+        resetOrder()
+    }
 
     fun setQuantity(numberCupcakes: Int){
         //atribui o argumento transmitido para as propriedades  mutáveis
@@ -56,7 +63,7 @@ class OrderViewModel : ViewModel() {
     //  Cria e retorna a lista de datas de retirada
     private fun getPickupOptions(): List<String> {
         val options = mutableListOf<String>()
-        val formatter = SimpleDateFormat("E MM d", Locale.getDefault())
+        val formatter = SimpleDateFormat("E MMM d", Locale.getDefault())
         val calendar = Calendar.getInstance()  // variável que conterá a data e hora atuais
 
         // Cria lista de datas (4 opções) começando com a data atual e as três datas seguintes
@@ -76,11 +83,6 @@ class OrderViewModel : ViewModel() {
         _price.value = 0.0
     }
 
-    // bloco init inicializa as propriedades quando uma instância do OrderViewModel é criada
-    init {
-        resetOrder()
-    }
-
     // verifica se o sabor do pedido foi definido ou não
     fun hasNoFlavorSet(): Boolean {
         return _flavor.value.isNullOrEmpty()
@@ -96,8 +98,7 @@ class OrderViewModel : ViewModel() {
 
         // Verifica se o usuário selecionou a retirada no mesmo dia. Se a data no modelo de
         // visualização (_date.value) é igual ao primeiro item da lista de dateOptions (dia atual)
-        if (_date.value == dateOptions[0]) {
-            // Adicione a sobretaxa
+        if (dateOptions[0] == _date.value) {
             calculatedPrice += PRICE_FOR_SAME_DAY_PICKUP
         }
         _price.value = calculatedPrice
